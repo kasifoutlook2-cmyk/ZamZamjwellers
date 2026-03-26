@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Metal – Zam Zam Jewellers</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<header class="header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="33" stroke="#c9973a" stroke-width="1.2" opacity="0.8"/><circle cx="35" cy="35" r="27" stroke="#c9973a" stroke-width="0.7" opacity="0.4"/><path d="M35 5 C30 14,25 18,35 24 C45 18,40 14,35 5Z" fill="rgba(200,150,50,0.6)"/><path d="M35 65 C30 56,25 52,35 46 C45 52,40 56,35 65Z" fill="rgba(200,150,50,0.6)"/><path d="M5 35 C14 30,18 25,24 35 C18 45,14 40,5 35Z" fill="rgba(200,150,50,0.6)"/><path d="M65 35 C56 30,52 25,46 35 C52 45,56 40,65 35Z" fill="rgba(200,150,50,0.6)"/><text x="17" y="34" font-family="Cinzel,serif" font-size="16" font-weight="700" fill="#e8c46a">Z</text><text x="39" y="44" font-family="Cinzel,serif" font-size="13" font-weight="600" fill="#c9973a">2</text><path d="M34 36 L36 33 L38 36 L36 39Z" fill="rgba(240,200,80,0.75)"/></svg></div>
+    <div class="logo-text"><span class="logo-brand">Zam Zam Jewellers</span><span class="logo-sub">Treasures Unlimited</span></div>
+  </a>
+  <nav class="nav-dark">
+    <a href="index.html">Home</a>
+    <a href="collections.html" class="active">Collections</a>
+    <a href="history.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <a href="book-appointment.html" class="header-btn">Book Appointment</a>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</header>
+<div class="header-mobile-menu" id="headerMobileMenu">
+  <a href="index.html">Home</a><a href="collections.html">Collections</a>
+  <a href="history.html">About</a><a href="contact.html">Contact</a>
+  <a href="book-appointment.html">Book Appointment</a>
+</div>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb" id="breadcrumb">
+    <a href="index.html">Home</a><span class="bc-sep">›</span>
+    <a href="collections.html">Collections</a><span class="bc-sep">›</span>
+    <span class="bc-current" id="bcGender">Ladies</span>
+  </div>
+</div>
+
+<div class="page-hero">
+  <p class="page-hero-eyebrow">Step 2 — Choose Metal</p>
+  <h1 id="pageTitle">Ladies Jewellery</h1>
+  <p id="pageSubtitle">Choose Gold, Silver or Diamond</p>
+</div>
+
+<section class="metal-tabs-section">
+  <div class="nav-section-header">
+    <p class="sec-label">Select Material</p>
+    <h2 class="sec-title">What Are You Looking For?</h2>
+    <div class="gold-divider"></div>
+  </div>
+  <div class="metal-cards-grid" id="metalCardsGrid">
+    <!-- filled by JS -->
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner"><div class="footer-brand">ZAM ZAM JEWELLERS</div></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a><a href="collections.html">Collections</a>
+    <a href="history.html">About</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Zam Zam Jewellers. All Rights Reserved.</p>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+const GNAMES = {ladies:'Ladies',gents:'Gents',kids:'Kids'};
+document.addEventListener('DOMContentLoaded', () => {
+  const gender = new URLSearchParams(window.location.search).get('gender') || 'ladies';
+  const gn = GNAMES[gender] || gender;
+  document.getElementById('pageTitle').textContent   = gn + ' Jewellery';
+  document.getElementById('pageSubtitle').textContent = 'Choose your preferred metal for ' + gn;
+  document.getElementById('bcGender').textContent     = gn;
+
+  const metals = [
+    { id:'gold',    cls:'mcb-gold',    icon:'🏆', label:'Gold',    sub:'22kt &amp; 18kt<br/>BIS Hallmarked' },
+    { id:'silver',  cls:'mcb-silver',  icon:'🪙', label:'Silver',  sub:'925 Sterling Silver<br/>Pure &amp; Polished' },
+    { id:'diamond', cls:'mcb-diamond', icon:'💎', label:'Diamond', sub:'IGI &amp; GIA Certified<br/>Solitaire &amp; Pavé' },
+  ];
+
+  document.getElementById('metalCardsGrid').innerHTML = metals.map(m => `
+    <a href="shop.html?gender=${gender}&metal=${m.id}" class="metal-card-box ${m.cls}">
+      <div class="mcb-icon">${m.icon}</div>
+      <div class="mcb-label">${m.label}</div>
+      <div class="mcb-sub">${m.sub}</div>
+      <div class="mcb-arrow">Shop ${m.label} →</div>
+    </a>`).join('');
+});
+</script>
+</body>
+</html>

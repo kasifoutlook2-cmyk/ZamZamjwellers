@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Appointment – Zam Zam Jewellers</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="33" stroke="#c9973a" stroke-width="1.2" opacity="0.8"/><circle cx="35" cy="35" r="27" stroke="#c9973a" stroke-width="0.7" opacity="0.4"/><path d="M35 5 C30 14,25 18,35 24 C45 18,40 14,35 5Z" fill="rgba(200,150,50,0.6)"/><path d="M35 65 C30 56,25 52,35 46 C45 52,40 56,35 65Z" fill="rgba(200,150,50,0.6)"/><path d="M5 35 C14 30,18 25,24 35 C18 45,14 40,5 35Z" fill="rgba(200,150,50,0.6)"/><path d="M65 35 C56 30,52 25,46 35 C52 45,56 40,65 35Z" fill="rgba(200,150,50,0.6)"/><text x="17" y="34" font-family="Cinzel,serif" font-size="16" font-weight="700" fill="#e8c46a">Z</text><text x="39" y="44" font-family="Cinzel,serif" font-size="13" font-weight="600" fill="#c9973a">2</text><path d="M34 36 L36 33 L38 36 L36 39Z" fill="rgba(240,200,80,0.75)"/></svg></div>
+    <div class="logo-text"><span class="logo-brand">Zam Zam Jewellers</span><span class="logo-sub">Treasures Unlimited</span></div>
+  </a>
+
+  <nav class="nav-dark">
+    <a href="index.html">Home</a>
+    <a href="collections.html">Collections</a>
+    <a href="history.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <a href="book-appointment.html" class="header-btn" style="background:#4a2a0e;">Book Appointment</a>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</header>
+
+<div class="header-mobile-menu" id="headerMobileMenu">
+  <a href="index.html">Home</a>
+  <a href="collections.html">Collections</a>
+  <a href="history.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="book-appointment.html">Book Appointment</a>
+</div>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">Book Appointment</span>
+  </div>
+</div>
+
+<div class="page-hero">
+  <p class="page-hero-eyebrow">Personal Consultation</p>
+  <h1>Book Appointment</h1>
+  <p>Schedule a private visit to our showroom.</p>
+</div>
+
+<section style="background:#ede4d6;padding:70px 60px;">
+  <div style="max-width:600px;margin:0 auto;">
+
+    <a href="index.html" class="back-link" style="display:inline-block;margin-bottom:36px;">← Back to Home</a>
+
+    <div style="text-align:center;margin-bottom:32px;">
+      <p class="sec-label">Fill in the Details</p>
+      <h2 class="sec-title">Schedule Your Visit</h2>
+      <div class="gold-divider"></div>
+    </div>
+
+    <form class="appointment-form" onsubmit="handleSubmit(event)">
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Your full name" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="+91 XXXXXXXXXX" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Email (Optional)</label>
+        <input type="email" id="email" placeholder="your@email.com"/>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Date</label>
+        <input type="date" id="date" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Purpose</label>
+        <select id="purpose">
+          <option disabled selected>Select purpose</option>
+          <option>Bridal Jewellery</option>
+          <option>Gold Purchase</option>
+          <option>Diamond Jewellery</option>
+          <option>Silver Jewellery</option>
+          <option>Custom Design</option>
+          <option>Repair</option>
+          <option>General Enquiry</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="message" placeholder="Any requirements..."></textarea>
+      </div>
+
+      <button type="submit">Confirm Appointment →</button>
+    </form>
+
+    <div id="successMsg" style="display:none;margin-top:24px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:28px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:10px;">✅</div>
+      <h3 style="font-family:'Cinzel',serif;font-size:18px;color:#2e7d32;margin-bottom:6px;">Appointment Requested!</h3>
+      <p style="font-family:'Lato',sans-serif;font-size:14px;color:#388e3c;">We'll call you within 24 hours to confirm.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">ZAM ZAM JEWELLERS</div>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="collections.html">Collections</a>
+    <a href="history.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Zam Zam Jewellers. All Rights Reserved.</p>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+  emailjs.init("Gs2apg9Qtma8pfsUz"); // 👈 apni public key daal
+})();
+
+function handleSubmit(e){
+  e.preventDefault();
+
+  const params = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    date: document.getElementById("date").value,
+    purpose: document.getElementById("purpose").value,
+    message: document.getElementById("message").value
+  };
+
+  emailjs.send("service_yasqeet", "template_xbdl7uw", params)
+    .then(function(res){
+      document.querySelector('.appointment-form').style.display='none';
+      document.getElementById('successMsg').style.display='block';
+    })
+    .catch(function(err){
+      alert("Email send failed ❌");
+    });
+}
+</script>
+
+</body>
+</html>

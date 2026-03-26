@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Zam Zam Jewellers</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #020617;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            color: gold;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5f5;
+            padding: 10px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .sidebar a:hover {
+            background: #1e293b;
+            border-radius: 5px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: gold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .delete {
+            background: red;
+            color: white;
+        }
+
+        .edit {
+            background: blue;
+            color: white;
+        }
+
+        .product-list {
+            margin-top: 40px;
+        }
+
+        .product {
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product img {
+            width: 100px;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>ZAM ZAM</h2>
+            <a href="#">Dashboard</a>
+            <a href="#">Add Product</a>
+            <a href="#">Products</a>
+        </div>
+
+        <!-- Main -->
+        <div class="main">
+
+            <h1>Admin Panel</h1>
+
+            <div class="card">
+                <h3>Add / Edit Jewellery</h3>
+
+                <form id="productForm" enctype="multipart/form-data">
+
+                    <input type="text" name="name" placeholder="Product Name" required>
+
+                    <input type="number" name="price" placeholder="Price" required>
+
+                    <!-- 🔥 NEW DROPDOWNS -->
+                    <select name="gender" required>
+                         <option value="" disabled selected>-- Select Gender --</option>
+                        <option value="ladies">Ladies</option>
+                        <option value="gents">Gents</option>
+                        <option value="kids">Kids</option>
+                    </select>
+
+                    <select name="metal" required>
+                        <option value="" disabled selected>-- Select Metal --</option>
+                        <option value="gold">Gold</option>
+                        <option value="silver">Silver</option>
+                        <option value="diamond">Diamond</option>
+                    </select>
+
+                    <select name="type" required>
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="rings">Ring</option>
+                        <option value="earrings">Earring</option>
+                        <option value="bracelets">Bracelet</option>
+                        <option value="chains">Chain</option>
+                        <option value="bangles">Bangle</option>
+                        <option value="pendants">Pendant</option>
+                        <option value="jhumki">Jhumki</option>
+                        <option value="jhala">Jhala</option>
+                        <option value="tika">Tika</option>
+                        <option value="jhumar">Jhumar</option>
+                        <option value="nath">Nath</option>
+                        <option value="set">Set</option>
+                        <option value="bali">Bali</option>
+                        <option value="pendant-set">Pendant Set</option>
+                    </select>
+
+                    <select name="brand" required>
+  <option value="" disabled selected>-- Select Brand --</option>
+  <option value="signity">Signity</option>
+  <option value="emerald">Emerald</option>
+  <option value="jadau">Jadau</option>
+  <option value="diamond">Diamond</option>
+  <option value="kalkateya">Kalkateya</option>
+  <option value="lazer">Lazer</option>
+  <option value="turkish">Turkish</option>
+  <option value="rajkoot">Rajkoot</option>
+  <option value="embose">Embose</option>
+</select>
+
+                    <input type="file" name="image">
+
+                    <button type="submit">Save Product</button>
+
+                </form>
+            </div>
+
+            <div class="product-list" id="productList"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const API = "http://localhost:5000/api/products";
+        let editId = null;
+
+        document.getElementById("productForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const gender = form.querySelector('[name="gender"]').value;
+const metal = form.querySelector('[name="metal"]').value;
+const type = form.querySelector('[name="type"]').value;
+
+console.log("SELECT VALUES:", gender, metal, type);
+
+if (!gender || !metal || !type) {
+    alert("❌ Please select all dropdowns");
+    return;
+}
+            const formData = new FormData(form);
+
+console.log([...formData.entries()]);
+
+
+
+            try {
+                let res;
+
+                if (editId) {
+                    res = await fetch(API + "/" + editId, {
+                        method: "PUT",
+                        body: formData
+                    });
+                    editId = null;
+                } else {
+                    res = await fetch(API, {
+                        method: "POST",
+                        body: formData
+                    });
+                }
+
+                const data = await res.json();
+
+                console.log("SERVER RESPONSE:", data);
+
+                if (!res.ok) {
+                    throw new Error(data.message || "Something failed");
+                }
+
+                alert("✅ Product Saved Successfully!");
+
+                e.target.reset();
+                loadProducts();
+
+            } catch (err) {
+                console.error("❌ ERROR:", err);
+                alert("❌ Failed to save product");
+            }
+        });
+
+        async function loadProducts() {
+            try {
+                const res = await fetch(API);
+                const data = await res.json();
+
+                console.log("LOADED PRODUCTS:", data);
+
+                const container = document.getElementById("productList");
+                container.innerHTML = "<h2>All Products</h2>";
+
+                if (!data.length) {
+                    container.innerHTML += "<p>No products yet</p>";
+                    return;
+                }
+
+                data.forEach(p => {
+                    container.innerHTML += `
+            <div class="product">
+                <img src="http://localhost:5000/uploads/${p.image}">
+                <h3>${p.name}</h3>
+                <p>₹ ${p.price}</p>
+                <p><b>${p.gender || '—'} | ${p.metal || '—'} | ${p.type || '—'} | ${p.brand || '—'}</b></p>
+
+                <button class="edit" onclick="editProduct('${p._id}', '${p.name}', '${p.price}', '${p.gender}', '${p.metal}', '${p.type}', '${p.brand}')">Edit</button>
+                <button class="delete" onclick="deleteProduct('${p._id}')">Delete</button>
+            </div>
+            `;
+                });
+
+            } catch (err) {
+                console.log("LOAD ERROR:", err);
+            }
+        }
+
+        async function deleteProduct(id) {
+            await fetch(API + "/" + id, { method: "DELETE" });
+            loadProducts();
+        }
+
+        function editProduct(id, name, price, gender, metal, type, brand) {
+    document.querySelector('[name="name"]').value = name;
+    document.querySelector('[name="price"]').value = price;
+    document.querySelector('[name="gender"]').value = gender;
+    document.querySelector('[name="metal"]').value = metal;
+    document.querySelector('[name="type"]').value = type;
+    document.querySelector('[name="brand"]').value = brand;
+    editId = id;
+}
+
+        loadProducts();
+    </script>
+</body>
+
+</html>
