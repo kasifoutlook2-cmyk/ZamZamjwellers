@@ -190,7 +190,7 @@
     </div>
 
     <script>
-        const API = "http://localhost:5000/api/products";
+        const API  = "https://zamzamjwellers.onrender.com";
         let editId = null;
 
         document.getElementById("productForm").addEventListener("submit", async (e) => {
@@ -266,7 +266,7 @@ console.log([...formData.entries()]);
                 data.forEach(p => {
                     container.innerHTML += `
             <div class="product">
-                <img src="http://localhost:5000/uploads/${p.image}">
+                <img src="https://zamzamjwellers.onrender.com/uploads/...">
                 <h3>${p.name}</h3>
                 <p>₹ ${p.price}</p>
                 <p><b>${p.gender || '—'} | ${p.metal || '—'} | ${p.type || '—'} | ${p.brand || '—'}</b></p>

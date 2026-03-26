@@ -292,7 +292,7 @@ async function renderProducts() {
   if (headEl) headEl.textContent = `${mn} ${catName}`;
 
   try {
-    const url = `http://localhost:5000/api/products?gender=${currentGender}&metal=${currentMetal}&type=${currentType}`;
+    const url = `https://zamzamjwellers.onrender.com/api/products?gender=${currentGender}&metal=${currentMetal}&type=${currentType}`;
 
     const res = await fetch(url);
 
@@ -318,7 +318,7 @@ async function renderProducts() {
           <span class="product-badge ${BCLS[badge]}">${badge}</span>
 
           <div class="product-img">
-            <img src="http://localhost:5000/uploads/${p.image}" 
+            <img src="https://zamzamjwellers.onrender.com/uploads/${p.image}" 
                  style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>
           </div>
 
@@ -376,26 +376,3 @@ function updateCount(count) {
     el.innerText = `${count} items found`;
   }
 }
-const API_URL = "http://localhost:5000/api/products";
-
-async function loadProducts() {
-  try {
-    const res = await fetch(API_URL);
-    const products = await res.json();
-
-    const container = document.getElementById("products");
-
-    container.innerHTML = products.map(p => `
-      <div class="product-card">
-        <img src="http://localhost:5000${p.image}" alt="${p.name}" />
-        <h3>${p.name}</h3>
-        <p>₹${p.price}</p>
-      </div>
-    `).join("");
-
-  } catch (err) {
-    console.error("Error loading products:", err);
-  }
-}
-
-loadProducts();
