@@ -575,9 +575,10 @@ html, body {
   display: flex !important;
 }
 @media (max-width: 960px) {
+  .header-btn {
+    display: none;
+  }
   .btn-nav {
-    font-size: 10px;
-    padding: 8px 12px;
-    letter-spacing: 1px;
+    display: none;
   }
 }
