@@ -216,8 +216,7 @@ body{font-family:'Lato',Georgia,serif;background:#f4efe9;color:#3a2a1a;overflow-
 .products-heading{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#3a2a1a;}
 .products-count{font-family:'Lato',sans-serif;font-size:13px;color:rgba(80,50,20,0.5);}
 
-/* Products grid */
-.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+
 
 /* Product card */
 .product-card{background:#fff;border-radius:10px;overflow:hidden;border:1px solid rgba(160,110,50,0.12);transition:transform 0.35s,box-shadow 0.35s;position:relative;}
@@ -314,18 +313,8 @@ body{font-family:'Lato',Georgia,serif;background:#f4efe9;color:#3a2a1a;overflow-
   .cta{padding:11px 16px;font-size:14px;}
   .metal-tabs-section{padding:40px 20px 60px;}
 }
-/* ===== PAGE BACKGROUND ===== */
-body {
-  background: #f5efe6;
-  font-family: 'Segoe UI', sans-serif;
-}
 
-/* ===== MAIN LAYOUT ===== */
-.shop-body {
-  display: flex;
-  gap: 30px;
-  padding: 30px;
-}
+
 
 /* ===== SIDEBAR ===== */
 #categorySidebar {
@@ -418,12 +407,6 @@ body {
   letter-spacing: 1px;
 }
 /* ===== PRODUCTS GRID FIX ===== */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 10px;
-}
 
 /* Tablet */
 @media (max-width: 992px) {
@@ -468,4 +451,133 @@ body {
 
 .header-mobile-menu.active {
   display: flex;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 15px;
+    overflow: hidden;
+  }
+
+  .logo-text {
+    font-size: 14px;
+  }
+
+  .header-btn {
+    display: none;
+  }
+
+  .nav-dark {
+    display: none;
+  }
+}
+.page-hero {
+  width: 100%;
+  overflow: hidden;
+}
+html, body {
+  overflow-x: hidden;
+}
+/* ══ MOBILE OVERFLOW FIX ══ */
+@media (max-width: 768px) {
+
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .header {
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  .logo-brand {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .logo-sub {
+    font-size: 9px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .page-hero,
+  .page-hero.compact {
+    width: 100%;
+    padding: 40px 16px 28px;
+    overflow: hidden;
+  }
+
+  .page-hero h1 {
+    font-size: 26px;
+  }
+
+  .nav-section {
+    width: 100%;
+    padding: 40px 16px;
+    overflow: hidden;
+  }
+
+  .gender-grid {
+    width: 100%;
+    padding: 0 8px;
+  }
+
+  .gender-card {
+    width: 100%;
+  }
+
+  .breadcrumb-bar {
+    padding: 10px 16px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .shop-content {
+    padding: 16px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .brand-filter {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 12px;
+  }
+
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: rgba(20,10,2,0.97);
+  padding: 20px 30px;
+  gap: 16px;
+  position: absolute;
+  top: 94px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.mobile-menu.active {
+  display: flex !important;
+}
+@media (max-width: 960px) {
+  .btn-nav {
+    font-size: 10px;
+    padding: 8px 12px;
+    letter-spacing: 1px;
+  }
 }
