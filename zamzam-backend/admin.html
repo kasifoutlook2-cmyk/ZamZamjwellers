@@ -190,104 +190,92 @@
     </div>
 
     <script>
-        const API  = "https://zamzamjwellers.onrender.com";
-        let editId = null;
+       const API = "/api/products";
+let editId = null;
 
-        document.getElementById("productForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
+document.getElementById("productForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-            const form = e.target;
-            const gender = form.querySelector('[name="gender"]').value;
-const metal = form.querySelector('[name="metal"]').value;
-const type = form.querySelector('[name="type"]').value;
+    const form = e.target;
+    const gender = form.querySelector('[name="gender"]').value;
+    const metal = form.querySelector('[name="metal"]').value;
+    const type = form.querySelector('[name="type"]').value;
 
-console.log("SELECT VALUES:", gender, metal, type);
+    if (!gender || !metal || !type) {
+        alert("❌ Please select all dropdowns");
+        return;
+    }
 
-if (!gender || !metal || !type) {
-    alert("❌ Please select all dropdowns");
-    return;
-}
-            const formData = new FormData(form);
+    const formData = new FormData(form);
 
-console.log([...formData.entries()]);
+    try {
+        let res;
 
+        if (editId) {
+            res = await fetch(API + "/" + editId, {
+                method: "PUT",
+                body: formData
+            });
+            editId = null;
+        } else {
+            res = await fetch(API, {
+                method: "POST",
+                body: formData
+            });
+        }
 
+        const data = await res.json();
 
-            try {
-                let res;
+        if (!res.ok) {
+            throw new Error(data.message || "Something failed");
+        }
 
-                if (editId) {
-                    res = await fetch(API + "/" + editId, {
-                        method: "PUT",
-                        body: formData
-                    });
-                    editId = null;
-                } else {
-                    res = await fetch(API, {
-                        method: "POST",
-                        body: formData
-                    });
-                }
+        alert("✅ Product Saved Successfully!");
+        e.target.reset();
+        loadProducts();
 
-                const data = await res.json();
+    } catch (err) {
+        console.error("❌ ERROR:", err);
+        alert("❌ Failed to save product");
+    }
+});
 
-                console.log("SERVER RESPONSE:", data);
+async function loadProducts() {
+    try {
+        const res = await fetch(API);
+        const data = await res.json();
 
-                if (!res.ok) {
-                    throw new Error(data.message || "Something failed");
-                }
+        const container = document.getElementById("productList");
+        container.innerHTML = "<h2>All Products</h2>";
 
-                alert("✅ Product Saved Successfully!");
+        if (!data.length) {
+            container.innerHTML += "<p>No products yet</p>";
+            return;
+        }
 
-                e.target.reset();
-                loadProducts();
-
-            } catch (err) {
-                console.error("❌ ERROR:", err);
-                alert("❌ Failed to save product");
-            }
-        });
-
-        async function loadProducts() {
-            try {
-                const res = await fetch(API);
-                const data = await res.json();
-
-                console.log("LOADED PRODUCTS:", data);
-
-                const container = document.getElementById("productList");
-                container.innerHTML = "<h2>All Products</h2>";
-
-                if (!data.length) {
-                    container.innerHTML += "<p>No products yet</p>";
-                    return;
-                }
-
-                data.forEach(p => {
-                    container.innerHTML += `
+        data.forEach(p => {
+            container.innerHTML += `
             <div class="product">
-                <img src="https://zamzamjwellers.onrender.com/uploads/...">
+                <img src="/uploads/${p.image}">
                 <h3>${p.name}</h3>
                 <p>₹ ${p.price}</p>
                 <p><b>${p.gender || '—'} | ${p.metal || '—'} | ${p.type || '—'} | ${p.brand || '—'}</b></p>
-
                 <button class="edit" onclick="editProduct('${p._id}', '${p.name}', '${p.price}', '${p.gender}', '${p.metal}', '${p.type}', '${p.brand}')">Edit</button>
                 <button class="delete" onclick="deleteProduct('${p._id}')">Delete</button>
-            </div>
-            `;
-                });
+            </div>`;
+        });
 
-            } catch (err) {
-                console.log("LOAD ERROR:", err);
-            }
-        }
+    } catch (err) {
+        console.log("LOAD ERROR:", err);
+    }
+}
 
-        async function deleteProduct(id) {
-            await fetch(API + "/" + id, { method: "DELETE" });
-            loadProducts();
-        }
+async function deleteProduct(id) {
+    await fetch(API + "/" + id, { method: "DELETE" });
+    loadProducts();
+}
 
-        function editProduct(id, name, price, gender, metal, type, brand) {
+function editProduct(id, name, price, gender, metal, type, brand) {
     document.querySelector('[name="name"]').value = name;
     document.querySelector('[name="price"]').value = price;
     document.querySelector('[name="gender"]').value = gender;
@@ -297,7 +285,7 @@ console.log([...formData.entries()]);
     editId = id;
 }
 
-        loadProducts();
+loadProducts();
     </script>
 </body>
 
