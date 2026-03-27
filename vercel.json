@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://zamzamjwellers.onrender.com/admin.html",
+      "permanent": false
+    }
+  ]
+}
